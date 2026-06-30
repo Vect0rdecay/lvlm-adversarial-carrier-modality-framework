@@ -1,8 +1,8 @@
 # Literature Index
 
-Reverse crosswalk: paper or attack family → carrier class(es) → modality project file.
+Paper or attack family → carrier class(es) → modality project file.
 
-Sources: Silent Scalpel posts 7–9, nn_security_analyzer batches, and verified 2025–2026 update searches. No fabricated results; entries reflect what the cited work reports.
+Sources: 
 
 | Paper / attack family | Link | Carrier class | Project file |
 |---|---|---|---|
@@ -37,5 +37,5 @@ Sources: Silent Scalpel posts 7–9, nn_security_analyzer batches, and verified 
 ## Notes
 
 - **Agentic delivery** (RAG, tool outputs, external documents) is not a separate carrier class; map to B, C, or F depending on representation.
-- **C (Symbolic)** is covered in [ontology.md](ontology.md); a dedicated `symbolic-notation.md` project file is backlog.
-- Research backbone: Silent Scalpel posts 7–9 and nn_security_analyzer batch notes.
+- **C (Symbolic)** has one indexed paper (MathPrompt); a dedicated project file is backlog.
+
