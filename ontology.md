@@ -64,6 +64,13 @@ The ontology is organized by what the carrier primarily leverages inside the mod
 - Audio spectrograms: Mel-frequency cepstral coefficients (MFCCs) processing in models like Whisper, converting waveforms into visual-like representations for speech-to-text.  
 - Scene context: Holistic scene understanding via models like DETR, parsing background elements into object relations for visual question answering.  
 
+**Literature examples**
+- [Adversarial Patch](https://arxiv.org/abs/1712.09665) and [LaVAN](https://arxiv.org/abs/1801.02608): the carrier is localized visual texture that survives translation across the image and can dominate classification.
+- [Robust Physical-World Attacks (RP2)](https://arxiv.org/abs/1707.08945) and [Expectation over Transformation (EoT)](https://arxiv.org/abs/1707.07397): the carrier is printed or projected visual structure that survives camera capture, lighting, viewing angle, and resampling.
+- [Chameleon](https://arxiv.org/abs/2512.04895): the carrier is a visual prompt injection pattern designed to survive image downscaling before the model sees it.
+- [Image-Based Prompt Injection (IPI)](https://arxiv.org/abs/2603.03637): the carrier is visually embedded instruction text, often blended into natural image regions through font, color, and placement choices.
+- [VEAttack](https://arxiv.org/abs/2505.17440): the carrier is a perturbed image whose meaning is expressed through shifted vision-encoder features rather than visible text.
+
 **Core Property**  
 The payload exists in **raw sensory space** and must be recognized or parsed before reasoning.
 
@@ -81,6 +88,13 @@ The payload exists in **raw sensory space** and must be recognized or parsed bef
 - Forms: Layout-aware OCR in models like LayoutLM, aligning fields and values for document understanding in scanned images.  
 - Flowcharts: Process flow interpretation via sequence modeling, where LVLMs like Kosmos-2 trace paths for procedural description generation.  
 - Entity-relationship (ER) diagrams: Schema parsing in multimodal setups, using entity detection to build relational embeddings for database visualization tasks.  
+
+**Literature examples**
+- [FigStep / FigStep-Pro](https://arxiv.org/abs/2311.05608): the carrier is the arrangement of text fragments across visual tiles, where no single tile contains the full meaning.
+- [CrossInject](https://arxiv.org/abs/2504.14348): semantic injection where the carrier is structure and layout used to recombine adversarial cues, rather than a single visible instruction.
+- Document and page-image injection in agentic RAG pipelines (see [Prompt Injection 2.0](https://arxiv.org/abs/2507.13169)): the carrier is a retrieved PDF page, screenshot, chart, or document image that enters the model as external content.
+- Visual sanitizer / provenance defense work (see [Cross-Agent Multimodal Provenance-Aware Defense](https://arxiv.org/abs/2512.23557)): treats OCR text, metadata, image patches, and document regions as separate structural units that need trust labels.
+- Tables and financial records remain a thin area in the current literature, but they fit this class because the meaning comes from row, column, and field relationships.
 
 **Core Property**  
 The payload exists primarily in **relationships**, not tokens.
@@ -100,6 +114,12 @@ The payload exists primarily in **relationships**, not tokens.
 - Chemical equations: Molecular structure recognition using models like ChemBERTa integrated with vision, parsing SMILES from images for property prediction.  
 - Domain-specific languages (DSLs): Code snippet extraction from screenshots, where LVLMs like GPT-4V tokenize and ground DSL elements for execution tracing.  
 
+**Literature examples**
+- [MathPrompt](https://arxiv.org/abs/2409.11445): the carrier is a symbolic mathematics reformulation of natural-language intent, using formal notation (set theory, abstract algebra, symbolic logic) as the representation layer.
+- Symbolic logic and abstract algebra prompt transformations (also from [MathPrompt](https://arxiv.org/abs/2409.11445)): the carrier is not the surface words, but the formal mapping the model is asked to decode.
+- Code-like or DSL screenshots: the carrier is formal syntax presented visually, where the model reconstructs semantics through parsing rather than ordinary captioning.
+- Circuit, formula, and notation diagrams remain thinner in the current literature, but they belong here when the payload depends on formal semantics rather than visual resemblance.
+
 **Core Property**  
 The payload exists in **formal semantics**, not natural language.
 
@@ -114,6 +134,13 @@ The payload exists in **formal semantics**, not natural language.
 - Multi-turn chat history: Dialogue state tracking in conversational LVLMs, aggregating prior visual-text exchanges for context-aware responses.  
 - Video sequences: Temporal attention in models like Video-LLaMA, fusing frame embeddings over time for event summarization.  
 - Progressive disclosure across steps: Chain-of-thought processing in multimodal chains, where intermediate visual analyses build cumulative understanding.  
+
+**Literature examples**
+- [Muting Whisper](https://aclanthology.org/2024.emnlp-main.430/): the carrier is a short universal audio segment prepended before speech, causing later transcription behavior to change.
+- [Controlling Whisper](https://arxiv.org/abs/2407.04482): the carrier is a prepended audio segment that shifts task selection, such as transcription versus translation.
+- [Universal acoustic attacks for Speech-LLMs](https://aclanthology.org/2025.findings-emnlp.990/): the carrier is timing and placement of an audio prefix that affects later generation across prompts.
+- [Rethinking Audio-Visual Adversarial Vulnerability](https://arxiv.org/abs/2502.11858): on audio-visual recognition models, the temporal-invariance attack uses redundancy across consecutive time segments as the carrier. The concept maps cleanly onto temporal carriers even though the targets are classifiers rather than LVLMs.
+- [VoTA (Visualization-of-Thought Attack)](https://proceedings.neurips.cc/paper_files/paper/2025/hash/64365cafdbd0cb49c442edc02efda40d-Abstract-Conference.html) and [VisCRA](https://arxiv.org/abs/2505.19684): the carrier is a sequence of images or reasoning steps where unsafe meaning emerges across the chain rather than in one frame.
 
 **Core Property**  
 The payload **emerges only after aggregation over time**.
@@ -132,6 +159,13 @@ The payload **emerges only after aggregation over time**.
 - UI dashboards: Interface element parsing in LVLMs like Donut, extracting metrics and inferring user intent from layout hierarchies.  
 - “Expert” or professional environments: Scene classification in models like BLIP, using visual priors (e.g., lab coats) to ground domain-specific responses.  
 
+**Literature examples**
+- [StyleBreak](https://arxiv.org/abs/2511.10692): the carrier is speech style, including emotion, age, gender, and other paralinguistic cues that shift model behavior.
+- [Visual Contextual Attack (VisCo)](https://aclanthology.org/2025.emnlp-main.487/): the carrier is image-grounded scenario context that makes a later request appear more plausible.
+- [GAMBIT](https://aclanthology.org/2026.acl-long.367/): the carrier is gamified framing, role assignment, rules, and competition context around the multimodal input.
+- [Anchoring the Mind of Multimodal Reasoners](https://openaccess.thecvf.com/content/CVPR2026/html/Cong_Anchoring_the_Mind_of_Multimodal_Reasoners_Cognitive_Bias_as_a_CVPR_2026_paper.html): the carrier is a visual anchor, often structured as a mind map, that biases later reasoning through cognitive-bias framing.
+- Role or authority visuals remain useful examples here when the model infers legitimacy from uniforms, dashboards, credentials, lab settings, or professional environments.
+
 **Core Property**  
 The payload is **not explicit**; it is inferred from context.
 
@@ -148,6 +182,13 @@ The payload is **not explicit**; it is inferred from context.
 - Text states one thing while image, table, or audio implies another: Cross-modal verification in models like LLaVA, aligning caption with visual content for consistency checks.  
 - Audio contradicting visuals in videos: Audiovisual synchronization in models like AV-HuBERT, fusing speech and lip movements for transcription accuracy.  
 - Table data clashing with narrative text: Multimodal document processing in LayoutLMv3, merging tabular and textual semantics for report summarization.  
+
+**Literature examples**
+- [Image Hijacks](https://arxiv.org/abs/2309.00236): the carrier is split between a benign text binding prompt and visual content that shifts the model's response.
+- [Chain of Attack (CoA)](https://arxiv.org/abs/2411.15720): the carrier is cross-modal semantic alignment between image and text representations.
+- [Doubly-Universal Adversarial Perturbations](https://arxiv.org/abs/2412.08108): the carrier crosses both image and text inputs through shared attention and representation paths.
+- [AudioJailbreak](https://arxiv.org/abs/2505.14103) and [AdvWave](https://arxiv.org/abs/2412.08608): the carrier is audio that steers text generation through audio-to-language fusion.
+- [Rethinking Audio-Visual Adversarial Vulnerability](https://arxiv.org/abs/2502.11858): on audio-visual recognition models, the modality-misalignment attack uses incongruence between audio and visual streams as the carrier; the cross-channel concept transfers to multimodal LLMs.
 
 **Core Property**  
 The payload is **split across channels**, or hidden in the “weaker” modality.
