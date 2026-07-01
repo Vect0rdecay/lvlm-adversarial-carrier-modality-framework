@@ -5,12 +5,15 @@ I grouped these by ontology class (A–F), not by surface modality. Each project
 ```mermaid
 flowchart TB
   subgraph perceptual [A Perceptual]
-    audio[Audio streams]
     vlm[Images and VLM]
+    audio[Audio streams]
   end
   subgraph structural [B Structural]
-    flow[Flowcharts and tables]
     graphs[Graphs and layout]
+    flow[Flowcharts and tables]
+  end
+  subgraph symbolic [C Symbolic]
+    notation[Formal notation and math]
   end
   subgraph temporal [D Temporal]
     video[Sequences and chains]
@@ -49,6 +52,8 @@ flowchart TB
 | Modality | What carries intent | Status | Project |
 |----------|---------------------|--------|---------|
 | Sequences and chains | Aggregation over time, prepend timing | literature-mapped | [temporal-sequences.md](temporal-sequences.md) |
+
+Audio prepend attacks (Muting Whisper, Controlling Whisper, etc.) also have a temporal dimension — they are listed under A in [audio-streams.md](audio-streams.md) but cross-classified as D in the [literature index](../literature-index.md).
 
 ## E. Contextual Carriers
 

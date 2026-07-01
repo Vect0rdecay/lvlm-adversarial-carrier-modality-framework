@@ -1,7 +1,7 @@
 # Carrier Ontology for Multimodal Prompt Injection
 
 ---
-##
+
 This document defines a **carrier ontology** for studying representation-level safety risks in Large Vision–Language Models (LVLMs).  
 The ontology is intended for defensive research, benchmarking, and evaluation, not exploit development.
 I tried to organize it by what I thought the carrier would be taking advantage of inside the model and not by the surface modality alone. I think this allows for better introspection and reversing.
@@ -34,14 +34,14 @@ Attack papers mapped to each class are in [literature-index.md](literature-index
 ### A. Perceptual Carriers
 
 **Leverage**  
-- Vision / audio perception: Relies on early-stage convolutional layers or transformer attention mechanisms in multimodal models (e.g., CLIP or GPT-4V) for initial feature detection in pixel or waveform space.  
-- Low-level feature extraction: Engages edge detectors, color histograms, or frequency domain filters (e.g., via Fourier transforms) to capture basic patterns before higher-level integration.  
+- Vision / audio perception: the model's vision encoder (ViT, SigLIP, etc.) or audio encoder (Whisper, etc.) processes raw pixels or waveforms before any text-level safety filter engages.  
+- Low-level feature extraction: edge detection, frequency-domain filtering, and patch-token embedding happen in early layers where content is not yet semantically labeled.  
 
 **Examples**  
-- Images: Pixel-based object recognition in static photos, where models like ViT extract embeddings from raw RGB values for tasks like captioning.  
-- Video frames: Frame-level feature extraction in sequences, such as using optical flow in models like TimeSformer to process motion cues for action classification.  
-- Audio spectrograms: Mel-frequency cepstral coefficients (MFCCs) processing in models like Whisper, converting waveforms into visual-like representations for speech-to-text.  
-- Scene context: Holistic scene understanding via models like DETR, parsing background elements into object relations for visual question answering.  
+- Images: pixel-level patches, adversarial textures, or steganographic content embedded in photos that the vision encoder processes before language decoding.  
+- Video frames: per-frame feature extraction where motion cues or inter-frame perturbations carry intent across a temporal sequence.  
+- Audio spectrograms: waveform-to-spectrogram conversion where perturbations, prepended segments, or paralinguistic features encode intent before transcription.  
+- Scene context: holistic scene parsing where background objects, spatial layout, or environmental cues contribute to intent reconstruction.  
 
 **Core Property**  
 The payload exists in **raw sensory space** and must be recognized or parsed before reasoning.
@@ -51,15 +51,15 @@ The payload exists in **raw sensory space** and must be recognized or parsed bef
 ### B. Structural Carriers
 
 **Leverage**  
-- Relational reasoning: Draws on graph neural networks (GNNs) or attention-based relational modules to interpret node-edge connections during multimodal fusion.  
-- Structure parsing: Involves tokenization and parsing pipelines (e.g., in LVLMs with OCR or layout detection) to convert visual structures into tokenized representations for reasoning.  
+- Relational reasoning: the model reconstructs meaning from node-edge connections, row-column positions, or reading order rather than from any single token.  
+- Structure parsing: OCR, layout detection, and table extraction pipelines convert visual structures into tokenized representations; intent can hide in the relationships between extracted elements.  
 
 **Examples**  
-- Graphs: Node-link diagrams processed by models like Graphormer, embedding relational data for tasks such as knowledge graph completion in visual contexts.  
-- Tables: Grid-based extraction using models like TableTransformer, parsing rows and columns into structured tokens for query answering.  
-- Forms: Layout-aware OCR in models like LayoutLM, aligning fields and values for document understanding in scanned images.  
-- Flowcharts: Process flow interpretation via sequence modeling, where LVLMs like Kosmos-2 trace paths for procedural description generation.  
-- Entity-relationship (ER) diagrams: Schema parsing in multimodal setups, using entity detection to build relational embeddings for database visualization tasks.  
+- Graphs: node-link diagrams where intent is distributed across edges and only assembles after the model traces connectivity.  
+- Tables: grid structures where meaning lives in row-column relationships, not individual cell values.  
+- Forms: field-value layouts where the model must align labels to entries, creating parsing-dependent intent recovery.  
+- Flowcharts: process diagrams where the model follows directed paths, reconstructing procedural intent from visual topology.  
+- Entity-relationship (ER) diagrams: schema-like visuals where entity names and relationship arcs encode structured intent.  
 
 **Core Property**  
 The payload exists primarily in **relationships**, not tokens.
@@ -69,15 +69,15 @@ The payload exists primarily in **relationships**, not tokens.
 ### C. Symbolic Carriers
 
 **Leverage**  
-- Formal languages: Utilizes syntax parsers and semantic evaluators (e.g., in neurosymbolic extensions of LVLMs) to interpret rule-based constructs during token alignment.  
-- Symbol grounding: Employs grounding mechanisms (e.g., via cross-modal embeddings) to map abstract symbols to visual or textual anchors for coherent reasoning.  
+- Formal languages: the model interprets rule-based constructs (equations, logic, notation) through learned symbolic grounding rather than natural-language semantics.  
+- Symbol grounding: cross-modal embeddings map abstract symbols to visual or textual anchors, allowing intent encoded in formal notation to be reconstructed during inference.  
 
 **Examples**  
-- Mathematical notation: LaTeX or handwritten equation parsing in models like MathPix, converting symbols into executable forms for problem-solving.  
-- Logic operators: Propositional formula interpretation in LVLMs with logical reasoning plugins, aligning symbols for inference tasks.  
-- Circuits: Diagram-to-code conversion in models like Pix2Struct, extracting gate connections for simulation or description.  
-- Chemical equations: Molecular structure recognition using models like ChemBERTa integrated with vision, parsing SMILES from images for property prediction.  
-- Domain-specific languages (DSLs): Code snippet extraction from screenshots, where LVLMs like GPT-4V tokenize and ground DSL elements for execution tracing.  
+- Mathematical notation: LaTeX or handwritten equations where the model converts symbolic expressions into natural-language explanations or executable reasoning steps.  
+- Logic operators: propositional or predicate formulas that the model evaluates or translates, carrying intent in formal structure rather than surface words.  
+- Circuits: schematic diagrams where gate connections and signal paths encode procedural or functional intent.  
+- Chemical equations: molecular structures or reaction diagrams where the model parses formal notation into descriptive or predictive output.  
+- Domain-specific languages (DSLs): code snippets or formal specifications in images that the model reads and interprets as instructions.  
 
 **Core Property**  
 The payload exists in **formal semantics**, not natural language.
@@ -87,12 +87,12 @@ The payload exists in **formal semantics**, not natural language.
 ### D. Temporal Carriers
 
 **Leverage**  
-- Cross-turn or cross-frame accumulation: Depends on recurrent or transformer memory mechanisms (e.g., LSTM states or KV caches) to integrate information sequentially in extended contexts.  
+- Cross-turn or cross-frame accumulation: the model integrates information across turns (via KV cache or context window) or across frames (via temporal attention), so intent can emerge from sequence rather than from any single input.  
 
 **Examples**  
-- Multi-turn chat history: Dialogue state tracking in conversational LVLMs, aggregating prior visual-text exchanges for context-aware responses.  
-- Video sequences: Temporal attention in models like Video-LLaMA, fusing frame embeddings over time for event summarization.  
-- Progressive disclosure across steps: Chain-of-thought processing in multimodal chains, where intermediate visual analyses build cumulative understanding.  
+- Multi-turn chat history: prior exchanges accumulate context so that a later turn's benign request becomes unsafe only in light of earlier turns.  
+- Video sequences: temporal attention fuses frame embeddings over time, so perturbations or cues distributed across frames assemble into coherent intent.  
+- Progressive disclosure across steps: chain-of-thought or stepwise visual reasoning where each step is benign but the cumulative trajectory reconstructs unsafe intent.  
 
 **Core Property**  
 The payload **emerges only after aggregation over time**.
@@ -102,14 +102,14 @@ The payload **emerges only after aggregation over time**.
 ### E. Contextual Carriers
 
 **Leverage**  
-- Role inference: Incorporates persona-based or bias-tuned embeddings (e.g., in fine-tuned LVLMs) to derive implied roles from visual cues.  
-- Situational priors: Applies Bayesian priors or contextual embeddings (e.g., in CLIP-like models) to modulate processing based on scene indicators.  
-- Implied authority: Uses trust heuristics in multimodal alignment, prioritizing cues from perceived authoritative elements.  
+- Role inference: the model derives implied roles, authority, or expertise from visual or environmental cues without explicit instruction.  
+- Situational priors: scene-level context (workplace, lab, dashboard) biases the model toward domain-specific behavior, shifting what it treats as plausible or permitted.  
+- Implied authority: visual markers of trust (uniforms, credentials, professional settings) can suppress safety priors by framing the request as authorized.  
 
 **Examples**  
-- Workplace scenes: Environmental cue processing in models like VisualBERT, inferring professional roles from office layouts for caption refinement.  
-- UI dashboards: Interface element parsing in LVLMs like Donut, extracting metrics and inferring user intent from layout hierarchies.  
-- “Expert” or professional environments: Scene classification in models like BLIP, using visual priors (e.g., lab coats) to ground domain-specific responses.  
+- Workplace scenes: office or institutional environments where the model infers professional context and adjusts response permissiveness accordingly.  
+- UI dashboards: interface layouts where the model reads metrics, controls, or status indicators and infers operational intent from visual hierarchy.  
+- Professional environments: visual cues like lab equipment, medical settings, or credential-bearing contexts that prime the model toward domain-specific (and potentially less guarded) responses.  
 
 **Core Property**  
 The payload is **not explicit**; it is inferred from context.
@@ -119,14 +119,14 @@ The payload is **not explicit**; it is inferred from context.
 ### F. Cross-Channel Composite Carriers
 
 **Leverage**  
-- Modality conflict: Handles resolution in fusion layers (e.g., cross-attention in models like Flamingo) to reconcile differing signals.  
-- Modality dominance: Applies weighting in alignment mechanisms (e.g., vision-text in GPT-4V), where one modality guides the other's interpretation.  
-- Multimodal fusion behavior: Employs early or late fusion strategies to integrate features, creating unified representations from disparate inputs.  
+- Modality conflict: fusion layers (cross-attention, late fusion) must reconcile differing signals across channels; the resolution strategy determines which modality's intent wins.  
+- Modality dominance: alignment mechanisms weight modalities unevenly, so a payload in the dominant modality can override safety signals from the weaker one.  
+- Multimodal fusion behavior: early or late fusion creates unified representations where intent fragments from separate channels merge into coherent (and potentially unsafe) output.  
 
 **Examples**  
-- Text states one thing while image, table, or audio implies another: Cross-modal verification in models like LLaVA, aligning caption with visual content for consistency checks.  
-- Audio contradicting visuals in videos: Audiovisual synchronization in models like AV-HuBERT, fusing speech and lip movements for transcription accuracy.  
-- Table data clashing with narrative text: Multimodal document processing in LayoutLMv3, merging tabular and textual semantics for report summarization.  
+- Text states one thing while an image, table, or audio implies another — the model must resolve the conflict, and the resolution can favor the adversarial channel.  
+- Audio contradicting visuals in video — the model's fusion strategy determines whether speech or visual content governs the output.  
+- Table data clashing with narrative text — structural and textual semantics compete during document processing, and the payload hides in whichever channel the safety stack treats as secondary.  
 
 **Core Property**  
 The payload is **split across channels**, or hidden in the “weaker” modality.
@@ -137,6 +137,22 @@ The payload is **split across channels**, or hidden in the “weaker” modality
 
 Each candidate carrier should be annotated using the attributes below.  
 Together, these attributes form a **Carrier Record** used for ontology analysis and benchmark generation.
+
+### CarrierRecord Schema
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | string | Unique identifier (e.g., `A-patch-01`) |
+| `carrier_class` | enum (A–F) | Ontology class from §1 |
+| `modality` | string | Surface modality (image, audio, table, etc.) |
+| `representation_layer` | enum | Raw, Parsed, or Abstract (§2.1) |
+| `parse_dependency` | enum | Low, Medium, or High (§2.2) |
+| `binding_strength` | enum | Weak or Strong (§2.3) |
+| `compositionality` | enum | Atomic, Composable, or Distributed (§2.4) |
+| `ambiguity_budget` | enum | High, Medium, or Low (§2.5) |
+| `model_operation` | string | Triggered operation from §2.6 |
+| `source_paper` | string | Citation key or link |
+| `notes` | string | Free-text annotation |
 
 ---
 
@@ -225,7 +241,7 @@ Safety behavior differs substantially between operations
 
 - This ontology is representation-centric, not exploit-centric.
 - No carrier listed here implies misuse; all are framed for **defensive research**.
-- Author takes nor bears any responsibility for misuses by others.
+- Author neither takes nor bears any responsibility for misuses by others.
 
 ---
 

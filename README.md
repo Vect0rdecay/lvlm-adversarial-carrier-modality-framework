@@ -1,20 +1,19 @@
 # lvlm-adversarial-carrier-modality-framework
-**A Framework for Representation-Level Safety Evaluation in Large Vision–Language Models**
+**A Taxonomy for Representation-Level Safety Evaluation in Large Vision–Language Models**
 
 ---
-# LVLM-Carrier-Ontology  
+
 ## Overview
 
-This repository contains a framework for studying inference-phase safety failures in Large Vision–Language Models (LVLMs).
+This repository contains a taxonomy for studying inference-phase safety failures in Large Vision–Language Models (LVLMs).
 
 The core idea of this project is that unsafe model behavior does not originate from prompt text alone, but from latent intent reconstruction across representations—including images, structure, symbols, time, and context. This repository provides:
 
 - A carrier ontology for categorizing non-textual and cross-modal prompt representations  
-- A theory-grounded threat model under realistic black-box assumptions  
-- A structural failure classification identifying unavoidable classes of safety degradation  
-- A defensive evaluation protocol with metrics beyond Attack Success Rate (ASR)
+- A threat model scoped to black-box, inference-phase adversaries  
+- A structural failure classification identifying recurring classes of safety degradation  
 
-This is a **measurement and analysis framework**, not an exploit toolkit.
+This is a **measurement and analysis taxonomy**, not an exploit toolkit.
 
 ---
 
@@ -22,7 +21,7 @@ This is a **measurement and analysis framework**, not an exploit toolkit.
 
 Most LVLM safety research focuses on textual jailbreaks or pixel-level visual perturbations. But modern LVLMs reason over structure, relationships, abstraction, time, and inferred context.
 
-This project formalizes **representation-level risk**, enabling principled evaluation of prompt-based defenses, inference-time safety mechanisms, and multimodal alignment strategies.
+This project formalizes **representation-level risk**, enabling principled categorization of prompt-based defenses, inference-time safety mechanisms, and multimodal alignment strategies.
 
 ---
 
@@ -37,21 +36,21 @@ Carrier classes: **Perceptual** (images, audio, video) · **Structural** (graphs
 
 ### 2. Threat Model (Black-Box, Inference-Phase)
 
-Assumptions: query-only access, no gradients/weights/training data, no system-level compromise, only intended user-facing interfaces. The adversary objective is **intent reconstruction**, not explicit instruction injection.
+**Adversary capabilities:** query-only access through intended user-facing interfaces (text, image, audio upload). No access to model gradients, weights, training data, or system-level internals. The adversary can craft and submit multimodal inputs but cannot modify the model, its safety filters, or its deployment configuration.
+
+**Adversary objective:** latent intent reconstruction — encoding prohibited intent in non-textual or cross-modal representations such that the model recovers and acts on it during inference. This is distinct from explicit instruction injection; the intent is never stated in plaintext.
+
+**System model:** a deployed LVLM with text-level safety filters (system prompts, RLHF alignment, output classifiers). The model accepts multimodal input and performs reasoning operations (describe, summarize, plan, etc.) over fused representations.
+
+**Out of scope:** training-time attacks (data poisoning, backdoors), white-box gradient attacks, system-level compromise (prompt leakage, API abuse), and social engineering of human operators.
 
 ---
 
-### 3. Evaluation Protocol
+### 3. Structural Failure Classes
 
-The framework evaluates *how* safety fails, not just *whether* it fails.
+The repository identifies **eight recurring structural failure patterns** across carrier classes. These are documented in detail in [failure-classes.md](failure-classes.md).
 
-Metrics: **SLI** (safety latency — how late safety triggers) · **IRD** (intent reconstruction depth — abstraction depth before risk emerges) · **SLS** (semantic leakage — actionable detail leakage) · **MDC** (modality dominance — which modality overrides safety) · **RS** (refusal stability — consistency under paraphrase/context)
-
----
-
-### 4. Structural Failure Classes
-
-The repository formalizes **eight classes of unavoidable failure modes**, including:
+Summary:
 
 - **Representation gap failures** – safety filters trained on text miss equivalent intent encoded in non-textual carriers
 - **Temporal intent emergence** – benign individual turns combine into unsafe intent only visible across a sequence
@@ -65,7 +64,7 @@ The repository formalizes **eight classes of unavoidable failure modes**, includ
 ---
 ## Intended Use Cases
 
-This framework is designed for defensive benchmarking, inference-phase safety evaluation, red-team / blue-team alignment research, academic surveys, and pre-deployment risk assessment for multimodal systems. It is **not** intended for misuse, exploit development, or policy circumvention.
+This taxonomy is designed for defensive benchmarking, inference-phase safety evaluation, red-team / blue-team alignment research, academic surveys, and pre-deployment risk assessment for multimodal systems. It is **not** intended for misuse, exploit development, or policy circumvention.
 
 ---
 
@@ -84,10 +83,10 @@ to:
 
 ## Citation
 
-If you use this framework in academic work, please cite as:
+If you use this taxonomy in academic work, please cite as:
 @misc{lvlm_carrier_ontology,
 title = {A Carrier Ontology and Failure Taxonomy for Inference-Phase Safety in LVLMs},
-author = {Vect0rdecay},
+author = {Vect0rdecay (pseudonym)},
 year = {2026},
 note = {Github / working paper}
 }
