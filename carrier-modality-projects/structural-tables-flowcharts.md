@@ -4,7 +4,7 @@ Ontology class: B (Structural)
 
 Maps from prompt-carriers #3 (Flowcharts & Diagrams), #4 (Tables & Spreadsheets), and #6 (Financial Records).
 
-## Why this carrier class matters
+## Threat relevance
 
 Flowcharts, tables, and financial layouts carry meaning in structure: nodes and edges, rows and columns, field relationships. A model asked to "summarize this table" or "follow the diagram" reconstructs intent through parsing and relational reasoning, not from any single token. Typographic attacks that split instructions across tiles are a special case of the same pattern.
 

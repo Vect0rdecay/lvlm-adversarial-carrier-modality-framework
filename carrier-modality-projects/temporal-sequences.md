@@ -9,7 +9,7 @@ Ontology class: D (Temporal), with crossover into E (Contextual) when early turn
 - Stepwise or chained images
 - Multi-turn interaction history
 
-## Why this carrier class matters
+## Threat relevance
 
 LVLMs and speech-LLMs integrate meaning across time, not just within a single input. Safety systems often inspect each turn or frame on its own, so a payload that only assembles after aggregation can slip past per-step checks. The carrier here is timing, order, and accumulation: where an element sits in the sequence matters as much as what it contains.
 

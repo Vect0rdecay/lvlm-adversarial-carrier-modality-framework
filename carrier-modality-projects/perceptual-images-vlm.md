@@ -2,7 +2,7 @@
 
 Ontology class: A (Perceptual)
 
-## Why this carrier class matters
+## Threat relevance
 
 Most VLM attack literature lives here. The payload is encoded in pixels, patches, or vision-encoder features before the model ever reasons in language. Text safety filters never see the carrier because it never enters as a string. Physical-world robustness, downscaling survival, and encoder-only perturbations are all variations on the same idea: intent carried in raw sensory space.
 

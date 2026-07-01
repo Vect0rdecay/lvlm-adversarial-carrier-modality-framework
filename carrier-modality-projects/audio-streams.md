@@ -4,7 +4,7 @@ Ontology class: A (Perceptual) and D (Temporal) depending on whether the carrier
 
 Maps from prompt-carriers #1 (Audio Streams).
 
-## Why this carrier class matters
+## Threat relevance
 
 Speech-LLMs and audio-capable LVLMs process waveforms and spectrograms before text safety layers engage. Attacks can hide in paralinguistic style, imperceptible perturbations, or a short prefix that changes how the model handles everything after it. Audio is both a sensory carrier and, when prepended, a temporal one.
 

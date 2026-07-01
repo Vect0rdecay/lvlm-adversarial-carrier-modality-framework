@@ -14,36 +14,13 @@ A **carrier** is any input channel or representation that can encode **latent ta
 ---
 
 ### Payload (Intent Payload)
-The **payload** is the semantic content the adversary wants the model to recover, such as:
-- instructions  
-- constraints  
-- goals  
-- mappings
-- images  
-
-The payload may be implicit, distributed, or only recoverable after reasoning.
-
----
+The **payload** is the semantic content the adversary wants the model to recover — instructions, constraints, goals, mappings, or images. It may be implicit, distributed, or only recoverable after reasoning.
 
 ### Binding
-**Binding** is the mechanism that links a benign natural-language prompt to a carrier so that the model integrates them.
-
-Examples:
-- “refer to the diagram”
-- “summarize the table”
-- “use the audio”
-- “follow the plan”
-- "explain the following"
-
----
+**Binding** is the mechanism that links a benign natural-language prompt to a carrier so that the model integrates them (e.g., “refer to the diagram”, “summarize the table”, “follow the plan”).
 
 ### Reconstruction
-**Reconstruction** is the model-side process of turning carrier content into actionable intent, often via:
-- encoding/decoding
-- summarization
-- translation
-- inference
-- optimization
+**Reconstruction** is the model-side process of turning carrier content into actionable intent — encoding/decoding, summarization, translation, inference, or optimization.
 
 ---
 ## 1. Ontology Top-Level: Carrier Classes

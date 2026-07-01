@@ -4,7 +4,7 @@ Ontology class: E (Contextual)
 
 Maps from prompt-carriers #8 (Physical World Artifacts), #9 (Role-Anchoring Visuals).
 
-## Why this carrier class matters
+## Threat relevance
 
 The payload is not spelled out; the model infers it from scene, role, authority cues, game framing, or speech style. A lab photo, a dashboard, a competitive game scenario, or an emotional speaking style can shift what the model treats as plausible or permitted without any explicit harmful string in the carrier itself.
 

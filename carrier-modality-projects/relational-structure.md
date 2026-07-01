@@ -11,7 +11,7 @@ Ontology class: B (Structural), with crossover into E (Contextual) when structur
 - Tables, forms, and document layout
 - Typographic and OCR-rendered text inside images
 
-## Why this carrier class matters
+## Threat relevance
 
 The intent lives in relationships, not tokens. A text filter scans for words, but the reasoning the model performs happens over nodes, edges, rows, and reading order. When the payload is distributed across structure, no single element looks unsafe, and the meaning only assembles after the model parses the layout. The same property shows up whether the structure is a flowchart, a table, or text fragments arranged across an image.
 

@@ -4,7 +4,7 @@ Ontology class: F (Cross-Channel Composite)
 
 Maps from prompt-carriers #10 (Clean Trigger Artifacts) plus VLM fusion and cross-modal attack literature.
 
-## Why this carrier class matters
+## Threat relevance
 
 The payload is split across channels, or hidden in whichever modality the safety stack treats as secondary. Benign text can bind the model to a harmful image, audio can steer text generation, and shared attention paths let one perturbation affect both image and text inputs. Fusion is the attack surface.
 

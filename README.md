@@ -1,17 +1,17 @@
 # lvlm-adversarial-carrier-modality-framework
-**A Formal Framework for Representation-Level Safety Evaluation in Large Vision–Language Models**
+**A Framework for Representation-Level Safety Evaluation in Large Vision–Language Models**
 
 ---
 # LVLM-Carrier-Ontology  
 ## Overview
 
-This repository contains a **formal ontology, threat model, and evaluation framework** for studying **inference-phase safety failures** in Large Vision–Language Models (LVLMs).
+This repository contains a framework for studying inference-phase safety failures in Large Vision–Language Models (LVLMs).
 
-The core idea of this project is that **unsafe model behavior does not originate from prompt text alone**, but from **latent intent reconstruction across representations**—including images, structure, symbols, time, and context. This repository provides:
+The core idea of this project is that unsafe model behavior does not originate from prompt text alone, but from latent intent reconstruction across representations—including images, structure, symbols, time, and context. This repository provides:
 
 - A **carrier ontology** for categorizing non-textual and cross-modal prompt representations  
 - A **theory-grounded threat model** under realistic black-box assumptions  
-- A **theorem-style failure taxonomy** identifying unavoidable classes of safety degradation  
+- A **structural failure classification** identifying unavoidable classes of safety degradation  
 - A **defensive evaluation protocol** with metrics beyond Attack Success Rate (ASR)
 
 This is a **measurement and analysis framework**, not an exploit toolkit.
@@ -81,20 +81,18 @@ Metrics include:
 
 ---
 
-### 4. Theorem-Style Failure Taxonomy
+### 4. Structural Failure Classes
 
 The repository formalizes **eight classes of unavoidable failure modes**, including:
 
-- Representation gap failures  
-- Temporal intent emergence  
-- Distributed compositional payloads  
-- Cognitive operation mismatch  
-- Modality dominance bias  
-- Abstraction amplification  
-- Refusal instability  
-- Contextual prior override  
-
-These results will be expressed as **theorems with proof sketches**.
+- **Representation gap failures** – safety filters trained on text miss equivalent intent encoded in non-textual carriers
+- **Temporal intent emergence** – benign individual turns combine into unsafe intent only visible across a sequence
+- **Distributed compositional payloads** – unsafe intent is split across modalities so no single channel triggers defenses
+- **Cognitive operation mismatch** – the model performs reasoning operations (analogy, abstraction) that safety classifiers don't monitor
+- **Modality dominance bias** – one modality's signal overrides safety cues from another during fusion
+- **Abstraction amplification** – abstract or symbolic inputs get decoded into concrete unsafe outputs at inference time
+- **Refusal instability** – refusal behavior is inconsistent across semantically equivalent rephrasings or contexts
+- **Contextual prior override** – role, authority, or environmental framing suppresses learned safety priors
 
 ---
 ## Intended Use Cases
